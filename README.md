@@ -52,8 +52,17 @@
 - go为了安全考虑 不允许将十六进制的数字赋值为给一个指针类型
 - &变量  的类型就是 *T 
 
+## 2.3 gotty
+- 一个终端分享程序 让终端在浏览器中打开
+- https://github.com/yudai/gotty/releases 下载
+- tar zxvf gotty_2.0.0-alpha.3_darwin_amd64.tar
+- ./gotty -p 8080 -w bash 启动
 
 
+## 2.4 lshell 
+- https://github.com/ghantoos/lshell.git
+- 启动之后会进入一个新的shell 
+- 只能执行 ls ll echo 类似的命令
 
 
 
