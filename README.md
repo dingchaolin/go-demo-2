@@ -64,5 +64,15 @@
 - 启动之后会进入一个新的shell 
 - 只能执行 ls ll echo 类似的命令
 
+# 3. 语法
+- 整数 int int32 int64 uint uint32 uint64 int8 int16 
+- uint8  byte  等价的
+- xxd 把一个文件的ascii打印出来 一边是16进制 一遍是实际字符
+- xxd 文件名
+- 字符串不可修改
+- 通过跟[]byte相互转化来修改
+- bool true false
+
+
 
 
