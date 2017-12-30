@@ -72,6 +72,8 @@
 - 字符串不可修改
 - 通过跟[]byte相互转化来修改
 - bool true false
+- linux 下 proc目录下 所有的数字目录都是进程id
+
 
 
 
