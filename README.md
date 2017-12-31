@@ -120,6 +120,9 @@
 ### 3. 函数中，把err返回/上抛
 - 函数中不处理err ，把err上抛， 让调用者处理
 
+## 5.2 panic - defer recover
+- panic - defer recover 让当前函数退出
+
 
 
 
