@@ -123,6 +123,13 @@
 ## 5.2 panic - defer recover
 - panic - defer recover 让当前函数退出
 
+## 5.3 文件的读取方式
+- file.Read
+- ioutil.ReadFile
+- bufio.Scanner
+- bufio.Reader
+- io.Copy
+
 
 
 
