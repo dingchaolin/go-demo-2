@@ -130,6 +130,17 @@
 - bufio.Reader
 - io.Copy
 
+# 6 interface
+- go中可以为任何类型绑定方法，但是这个类型必须是用type声明的
+- 任何内置类型都不能绑定方法
+
+# 6.1 可见性
+- 通过首字母大小写来控制可见性
+- 可见性是package级别的
+- 只要同一个package名 package内就可以访问该package内的所有内容，
+- 包括共有属性和私有属性，不同文件也没关系，只要package名相同即可
+
+
 
 
 
