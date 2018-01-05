@@ -15,7 +15,7 @@ func fibonacci( n int, c chan int ){
 func main(){
 	c := make( chan int, 10 )
 	go fibonacci(cap(c), c )
-	for i := range c {
+	for i := range c {//close c 的时候 循环就结束了
 		fmt.Println( i )
 	}
 }
