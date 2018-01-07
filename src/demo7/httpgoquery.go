@@ -15,7 +15,9 @@ import (
 	"io"
 	"time"
 	"archive/tar"
+	"compress/gzip"
 )
+
 
 // 链接的形式
 // http://xxx.com.jpg
@@ -67,6 +69,10 @@ func fetch(url string) ([]string, error) {
 	}
 	urls := []string{}
 	doc.Find("img").Each(func(i int, s *goquery.Selection) {
+		//doc.Find("javascript").Each(func(i int, s *goquery.Selection) {//可以获取所有的js文件
+		/*
+		以此类推 所有的同类型的都可以下载 视频也可以
+		 */
 		link, ok := s.Attr("src")
 		if ok {
 			urls = append(urls, link)
@@ -88,7 +94,8 @@ func downloadImgs(urls []string, dir string) error {
 		}
 		defer resp.Body.Close()
 		if resp.StatusCode != http.StatusOK {
-			return errors.New(resp.Status)
+			continue
+			//return errors.New(resp.Status)
 		}
 		fullname := filepath.Join(dir, path.Base(u))
 		f, err := os.Create(fullname)
@@ -102,7 +109,10 @@ func downloadImgs(urls []string, dir string) error {
 }
 
 func makeTar(dir string, w io.Writer) error {
-	tr := tar.NewWriter(w) //创建一个可写的对象
+	compress := gzip.NewWriter(w)
+	defer compress.Close()
+	//tr := tar.NewWriter(w) //创建一个可写的对象
+	tr := tar.NewWriter( compress)//压缩
 	defer tr.Close()
 	filepath.Walk(dir, func(name string /*有路径信息*/ , info os.FileInfo, err error) error { //遍历文件
 		// 写入tar的fileHeader
@@ -166,7 +176,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	f, err := os.Create("img.tar")
+	//f, err := os.Create("img.tar")
+	f, err := os.Create("img.tar.gz")
 	if err != nil {
 		log.Fatal(err)
 	}
