@@ -16,8 +16,18 @@ import (
 	"time"
 	"archive/tar"
 	"compress/gzip"
+	"flag"
 )
 
+var (
+	label = flag.String("label", "img", "label to download")
+)
+
+var labelAttrMap = map[string]string{
+	"img":"src",
+	"script" : "src",
+	"a":"href",
+}
 
 // 链接的形式
 // http://xxx.com.jpg
@@ -68,12 +78,12 @@ func fetch(url string) ([]string, error) {
 		return nil, err
 	}
 	urls := []string{}
-	doc.Find("img").Each(func(i int, s *goquery.Selection) {
+	doc.Find(/*"img"*/*label).Each(func(i int, s *goquery.Selection) {
 		//doc.Find("javascript").Each(func(i int, s *goquery.Selection) {//可以获取所有的js文件
 		/*
 		以此类推 所有的同类型的都可以下载 视频也可以
 		 */
-		link, ok := s.Attr("src")
+		link, ok := s.Attr(/*"src"*/ labelAttrMap[*label])
 		if ok {
 			urls = append(urls, link)
 		} else {
@@ -153,6 +163,7 @@ func makeTar(dir string, w io.Writer) error {
 }
 
 func main() {
+	flag.Parse()
 	start := time.Now()
 	url := "http://daily.zhihu.com"
 	urls, err := fetch(url)
@@ -186,3 +197,7 @@ func main() {
 	useTime := time.Since(start)
 	fmt.Println("耗时为:=====", useTime)
 }
+/*
+命令
+go run -label=img httpgoquery.go
+ */
