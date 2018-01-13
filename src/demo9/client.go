@@ -9,7 +9,8 @@ import (
 )
 // tcp 是双工的 任何一方都可以主动发起关闭  关闭之后 另一方会收到 EOF
 func main(){
-	addr := "www.baidu.com:80"
+	//addr := "www.baidu.com:80"
+	addr := "127.0.0.1:8021"
 	//拨号
 	conn, err := net.Dial("tcp", addr)
 	if err != nil {
