@@ -6,10 +6,12 @@ import (
 	//"strconv"
 	//"time"
 	"os"
-	"io/ioutil"
+	//"io/ioutil"
 	"bufio"
 	"strings"
 	"flag"
+	"io"
+	"path/filepath"
 )
 
 var (
@@ -34,7 +36,7 @@ func handleConnFtp( conn net.Conn ){
 	// 关闭连接和文件
 	defer conn.Close()//不关闭连接  会造成资源泄露
 
-	r := bufio.NewReader(conn)
+	r := bufio.NewReader(conn)//会进行超前读取
 	line, _ := r.ReadString('\n')
 	line = strings.TrimSpace(line)
 	fields := strings.Fields(line)
@@ -52,18 +54,48 @@ func handleConnFtp( conn net.Conn ){
 			return
 		}
 		defer f.Close()
-		buf, err := ioutil.ReadAll(f)
-		if err != nil{
-			log.Println(err)
-			return
-		}
-		conn.Write([]byte(buf))
+		//大文件
+		// 方法1
+		//buf := make([]byte, 4096)
+		//for{
+		//	n, err := f.Read(buf)
+		//	if err != io.EOF{
+		//		break
+		//	}
+		//	conn.Write(buf[:n])
+		//}
+
+		// 方法2
+		// 一行能代替以上的所有代码
+		//块读取
+		// 把文件中的数据写到socket中
+		io.Copy(conn, f)
+		/*
+		socket中的数据写到文件中
+		 */
+		//io.Copy(conn, f)
+
+		//小文件
+		//buf, err := ioutil.ReadAll(f)
+		//if err != nil{
+		//	log.Println(err)
+		//	return
+		//}
+		//conn.Write([]byte(buf))
 	}else if cmd == "STORE"{
 		// 从 r 中读取文件内容
 		// 创建name文件
 		// 向文件写入数据
 		// 往conn写入ok
 		// 关闭连接和文件
+		os.MkdirAll(filepath.Dir(name), 0755)
+		f, err := os.Create(name)
+		if err != nil{
+			log.Println( err )
+			return
+		}
+		io.Copy(f, r )// 是r 不是conn
+		f.Close()
 	}
 
 
