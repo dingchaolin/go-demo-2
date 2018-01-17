@@ -5,14 +5,15 @@ import (
 	"log"
 	//"strconv"
 	//"time"
-	"os"
-	"io/ioutil"
+	//"os"
+	//"io/ioutil"
 	"bufio"
 	"strings"
-	"flag"
+	//"flag"
+	"fmt"
 )
 
-var globalRppm *Room = NewRoom()
+var globalRoom *Room = NewRoom()
 
 type Room struct{
 	users map[string]net.Conn
@@ -24,7 +25,7 @@ func NewRoom() *Room{
 	}
 }
 func (r *Room) Join( user string, conn net.Conn){
-	conn, ok := r.users[user]
+	_, ok := r.users[user]
 	if ok {
 		r.Leave(user)
 	}
@@ -34,10 +35,24 @@ func (r *Room) Join( user string, conn net.Conn){
 func (r *Room)Leave( user string){
 	//关掉连接
 	// 从users里面删除
+	conn,ok := r.users[user]
+	if !ok {
+		return
+	}
+	conn.Close()
+	delete(r.users, user)
 }
 
-func (r *Room)Broadcast(user string, msg string){
+func (r *Room)Broadcast(who string, msg string){
 	// 遍历所以的用户 发送消息
+	tosend := fmt.Sprintf("%s:%s\n", who, msg)
+	for user, conn := range r.users{
+		if user == who{
+			//过滤自己
+			//continue
+		}
+		conn.Write([]byte(tosend))
+	}
 
 }
 // client -> binggan 123456
@@ -66,11 +81,21 @@ func chatHandleConn(conn net.Conn){
 		return
 	}
 	// join用户
+	globalRoom.Join(user,conn)
+	globalRoom.Broadcast("system", fmt.Sprintf("%s join room", user))
 	for{
 		//获取用户输入
+		line, err := r.ReadString('\n')
+		if err != nil{
+			break
+		}
+		line = strings.TrimSpace(line)
 		//broadcast
+		globalRoom.Broadcast(user, line)
 	}
 	//leave用户
+	globalRoom.Broadcast("system", fmt.Sprintf("%s leave room", user))
+	globalRoom.Leave( user )
 
 
 }
@@ -91,8 +116,9 @@ func main(){
 		/*
 		哪里阻塞go哪里
 		 */
-		go handleConnFtp(conn)
+		go chatHandleConn(conn)
 	}
 
 }
 // telnet 127.0.0.1  8021
+// nc 127.0.0.1  8021
