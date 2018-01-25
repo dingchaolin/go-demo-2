@@ -228,6 +228,27 @@
 - 公钥私钥都可以加密 但是不可以用相同的钥匙解密
 - 对称加密  加密解密使用相同的钥匙
 
+## 接口是方法的集合 有方法列表
+- Writer 接口只有一个方法 就是 Write
+- 只要实现了接口里的所有的方法 就是这个接口
 
+## 12 单元测试- 功能测试
+- 假设要测试的文件名是 crypto.go  那么测试文件的文件名是 crypto_test.go
+- 函数名以 Test 开头  
+```
+import "testing"
 
+func TestCryptoReader_Read(t *testing.T) {
+	
+}
+```
+- 写完Test之后会自弹出要测试的函数
+- 入参必须是  t *testing.T
+
+## 13 基准测试 Benchmark开头 - 性能测试
+```
+ func BenchmarkNewCryptoWriter(b *testing.B) {
+	 
+ }
+```
 

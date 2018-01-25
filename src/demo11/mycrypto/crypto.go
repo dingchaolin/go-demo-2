@@ -2,12 +2,13 @@ package main
 
 import (
 	"io"
-	"net"
-	"fmt"
-	"crypto/cipher"
+	//"net"
+	//"fmt"
+	//"crypto/cipher"
 	"crypto/rc4"
-	"crypto"
+	//"crypto"
 	"crypto/md5"
+	"os"
 )
 
 type CryptoWriter struct{
@@ -60,18 +61,25 @@ func ( r *CryptoReader) Read(b []byte)(int, error){
 
 }
 func main(){
-	/*
-	key := "123456"
-	remote, err := net.Dial("tcp", "")
-	if err != nil{
-		fmt.Println( err )
-		return 
-	}
-	w := NewCryptoWriter( remote, key)
-	w.Write([]byte("hello"))
 
-	r := NewCryptoReader(remote, key)
-	buf := make([]byte, 1024)
-	r.Read(buf)
-	*/
+	//key := "123456"
+	//remote, err := net.Dial("tcp", "")
+	//if err != nil{
+	//	fmt.Println( err )
+	//	return
+	//}
+	//w := NewCryptoWriter( remote, key)
+	//w.Write([]byte("hello"))
+	//
+	//r := NewCryptoReader(remote, key)
+	//buf := make([]byte, 1024)
+	//r.Read(buf)
+	// echo hello | ./crypto
+	// echo hello | ./crypto ./crypto
+	r := NewCryptoReader(os.Stdout, "123456")
+	io.Copy(os.Stdout, r)
+
+	w := NewCryptoWriter(os.Stdout, "123456")
+	io.Copy(w, os.Stdin)
+
 }
