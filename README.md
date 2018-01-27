@@ -251,4 +251,15 @@ func TestCryptoReader_Read(t *testing.T) {
 	 
  }
 ```
+## 14 监控平台架构
+- agent 采集数据
+- transfer 收集agent数据, 放入kafka, 同时也是push网关
+- saver 从kafka读取数据放入到es
+- judge 从kafka读取数据，根据配置的报警规则 判断是否报警，报警数据放入到kafka
+- alarm 从kafka读取数据 发送邮件
+
+- 第三方组件
+- kafka数据传输对垒
+- elasticsearch数据存储
+- grafana图表展示
 

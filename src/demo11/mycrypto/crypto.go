@@ -9,7 +9,9 @@ import (
 	//"crypto"
 	"crypto/md5"
 	"os"
+	"flag"
 )
+
 
 type CryptoWriter struct{
 	w io.Writer
