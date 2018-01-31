@@ -263,3 +263,46 @@ func TestCryptoReader_Read(t *testing.T) {
 - elasticsearch数据存储
 - grafana图表展示
 
+## tcp 三次握手
+- 第一次 client 主动发起方发起 syn(同步)信息 -> server
+- 第二次 server -> ack+syn  -> client
+- 第三次 client -> ack -> server
+
+## tcp 四次挥手
+- 第一次 client FIN -> server
+- 第二次 server ACK -> client  server会收到EOF
+- 第三次 server FIN -> client
+- 第四次 client ACK -> server client会收到EOF
+
+## socket连接的五元组 fd 进行资源管理
+- 源地址
+- 源端口
+- 目的地址
+- 目的端口
+- 传输协议 tcp/udp
+
+## 四层协议
+- 传输层 tcp 封装源端口 目的端口
+- 网络层 ip  封装原地址 目的地址
+- 链路层 arp mac地址 mac帧 以太网帧
+- 物理层 串口 wifi无限信号
+
+## 网关传输
+- 网卡连接到网关上
+
+## 接收方
+- 层层从下往上解包
+- 路由器拆包拆到ip层 根据路由表 传输到对用的网络设备
+- 交换机连ip层都不拆。只需要广播就行
+- nat 需要拆包 
+
+## 四次握手
+- CLOSE_WAIT 收到ack 未回复
+- TIME_WAIT 回复的ack丢了
+
+## syn
+- 同步的序列号
+- 有一个初始号 每发一个字节 + 1
+- tcp重传很重要的信息
+
+
