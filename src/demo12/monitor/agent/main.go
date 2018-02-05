@@ -8,6 +8,11 @@ import (
 	"runtime"
 	"flag"
 	"github.com/shirou/gopsutil/load"
+	"os/exec"
+	"strconv"
+	"bufio"
+	"strings"
+	"log"
 )
 
 var (
@@ -54,6 +59,53 @@ func CpuMetric() []*common.Metric{
 	return ret
 }
 
+func NewUserMetric(cmdstr string) MetricFunc{
+	return func()[]*common.Metric {
+		metrics, err := getUserMetrics(cmdstr)
+		if err != nil{
+			log.Print(err)
+			return []*common.Metric{}
+		}
+		return metrics
+	}
+}
+func getUserMetrics( cmdstr string)([]*common.Metric, error){
+	//构建命令
+	//获取标准输出
+	//按行解析
+	//获取key, value
+	//包装成common.Metric
+	var ret []*common.Metric
+	cmd := exec.Command( "bash", "-c", cmdstr)
+	stdout, _ := cmd.StdoutPipe()
+
+	err := cmd.Start()
+	if err != nil {
+		return nil, err
+	}
+	r := bufio.NewReader(stdout)
+	for{
+		line, err := r.ReadString('\n')
+		if err != nil{
+			break
+		}
+		line = strings.TrimSpace(line)
+		fields := strings.Fields(line)
+		if len( fields ) != 2 {
+			continue
+		}
+		key, value := fields[0], fields[1]
+		n, err := strconv.ParseFloat( value, 64)
+		if err != nil{
+			log.Print(err)
+			continue
+		}
+		metric := NewMetric( key, n )
+		ret = append(ret, metric)
+	}
+	return ret , err
+
+}
 func main() {
 
     flag.Parse()
@@ -70,6 +122,7 @@ func main() {
 */
 	sched := NewSched(ch)
 	sched.AddMetric( CpuMetric, time.Second)
+	sched.AddMetric(NewUserMetric("./usr.py"), 3*time.Second)
 	sender.Start()
 
 }
