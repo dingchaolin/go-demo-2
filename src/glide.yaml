@@ -2,3 +2,7 @@ package: .
 import:
 - package: github.com/PuerkitoBio/goquery
   version: ^1.1.0
+- package: github.com/toml-lang/toml
+  version: ^0.4.0
+- package: github.com/BurntSushi/toml
+  version: ^0.3.0

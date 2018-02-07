@@ -1,6 +1,36 @@
-hash: 6d4f1e968e123af8aab3a865d78ac963ca00220e326947ff5c96b403bb1a6a4a
-updated: 2018-01-06T17:53:46.123202+08:00
+hash: 6d7ebf7c40629d86ca65d3022b6c6ea0eae3b8712e98744b5ba25ea9656524d8
+updated: 2018-02-07T22:36:49.599333+08:00
 imports:
+- name: github.com/andybalholm/cascadia
+  version: 349dd0209470eabd9514242c688c403c0926d266
+- name: github.com/BurntSushi/toml
+  version: b26d9c308763d68093482582cea63d69be07a0f0
+- name: github.com/go-ole/go-ole
+  version: eabdf371ac1f50f1506de7426f53c0386ee80986
+  subpackages:
+  - oleutil
 - name: github.com/PuerkitoBio/goquery
-  version: e1271ee34c6a305e38566ecd27ae374944907ee9
+  version: 09540e565986583836b5fc792fe951ec5fd201dd
+- name: github.com/shirou/gopsutil
+  version: c432be29ccce470088d07eea25b3ea7e68a8afbb
+  subpackages:
+  - cpu
+  - disk
+  - internal/common
+  - load
+  - mem
+- name: github.com/StackExchange/wmi
+  version: 5d049714c4a64225c3c79a7cf7d02f7fb5b96338
+- name: github.com/toml-lang/toml
+  version: cea4a77e97e9292aeb612af70b1be4f36cea4357
+- name: golang.org/x/net
+  version: 0ed95abb35c445290478a5348a7b38bb154135fd
+  subpackages:
+  - html
+  - html/atom
+- name: golang.org/x/sys
+  version: 83801418e1b59fb1880e363299581ee543af32ca
+  subpackages:
+  - unix
+  - windows
 testImports: []

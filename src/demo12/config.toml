@@ -1,0 +1,12 @@
+[sender]
+trans_addr = "127.0.0.1:8080"
+flush_interval = 5
+max_sleep_time = 30
+
+[[user_script]]
+path = "./monitor/agent/usr.py"
+step = 3
+
+[[user_script]]
+path = "./monitor/agent/redis.py"
+step = 10
