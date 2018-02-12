@@ -1,8 +1,6 @@
-hash: d50f32bcb4ec4a4376444ce3f421b7bcf990e11f67ed14e85d1da52ac05ad621
-updated: 2018-02-12T10:16:55.882063+08:00
+hash: 2b2e30e7534438c72b0d4a4c3262a2bee4ee603ef50dd4098c9d2c1b666d2a1d
+updated: 2018-02-12T10:09:27.754601+08:00
 imports:
-- name: github.com/andybalholm/cascadia
-  version: 349dd0209470eabd9514242c688c403c0926d266
 - name: github.com/bsm/sarama-cluster
   version: 3001c2453136632aa3219a58ea3795bb584b83b5
 - name: github.com/BurntSushi/toml
@@ -19,10 +17,6 @@ imports:
   version: bb955e01b9346ac19dc29eb16586c90ded99a98c
 - name: github.com/eapache/queue
   version: 44cc805cf13205b55f69e14bcb69867d1ae92f98
-- name: github.com/go-ole/go-ole
-  version: eabdf371ac1f50f1506de7426f53c0386ee80986
-  subpackages:
-  - oleutil
 - name: github.com/golang/snappy
   version: 553a641470496b2327abcac10b36396bd98e45c9
 - name: github.com/mailru/easyjson
@@ -48,32 +42,10 @@ imports:
   version: 09540e565986583836b5fc792fe951ec5fd201dd
 - name: github.com/rcrowley/go-metrics
   version: e181e095bae94582363434144c61a9653aff6e50
-- name: github.com/shirou/gopsutil
-  version: c432be29ccce470088d07eea25b3ea7e68a8afbb
-  subpackages:
-  - cpu
-  - disk
-  - internal/common
-  - load
-  - mem
 - name: github.com/Shopify/sarama
   version: 3b1b38866a79f06deddf0487d5c27ba0697ccd65
-- name: github.com/StackExchange/wmi
-  version: 5d049714c4a64225c3c79a7cf7d02f7fb5b96338
 - name: github.com/toml-lang/toml
   version: cea4a77e97e9292aeb612af70b1be4f36cea4357
-- name: golang.org/x/net
-  version: 0ed95abb35c445290478a5348a7b38bb154135fd
-  subpackages:
-  - html
-  - html/atom
-- name: golang.org/x/sys
-  version: 83801418e1b59fb1880e363299581ee543af32ca
-  subpackages:
-  - unix
-  - windows
-- name: golang.org/x/sys/unix
-  version: 37707fdb30a5b38865cfb95e5aab41707daec7fd
 - name: gopkg.in/olivere/elastic.v5
   version: 2963eb09b89294356e1a826068f33e5a44326ac0
 testImports: []

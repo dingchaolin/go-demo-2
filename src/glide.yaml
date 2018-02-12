@@ -10,3 +10,9 @@ import:
   version: ^1.15.0
 - package: github.com/bsm/sarama-cluster
   version: ^2.1.12
+- package: gopkg.in/olivere/elastic.v5
+  version: ^6.1.5
+- package: github.com/shirou/gopsutil
+  version: ^2.18.1
+  subpackages:
+  - cpu
