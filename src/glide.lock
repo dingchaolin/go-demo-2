@@ -1,16 +1,40 @@
-hash: 6d7ebf7c40629d86ca65d3022b6c6ea0eae3b8712e98744b5ba25ea9656524d8
-updated: 2018-02-07T22:36:49.599333+08:00
+hash: c86fd4cf2cfd8a291c6f0e16bcb8752aa96aa8e9a422e8fe3dda5db4a2b2e0d7
+updated: 2018-02-12T00:34:59.988489+08:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
+- name: github.com/bsm/sarama-cluster
+  version: 3001c2453136632aa3219a58ea3795bb584b83b5
 - name: github.com/BurntSushi/toml
   version: b26d9c308763d68093482582cea63d69be07a0f0
+- name: github.com/davecgh/go-spew
+  version: ecdeabc65495df2dec95d7c4a4c3e021903035e5
+  subpackages:
+  - spew
+- name: github.com/eapache/go-resiliency
+  version: ef9aaa7ea8bd2448429af1a77cf41b2b3b34bdd6
+  subpackages:
+  - breaker
+- name: github.com/eapache/go-xerial-snappy
+  version: bb955e01b9346ac19dc29eb16586c90ded99a98c
+- name: github.com/eapache/queue
+  version: 44cc805cf13205b55f69e14bcb69867d1ae92f98
 - name: github.com/go-ole/go-ole
   version: eabdf371ac1f50f1506de7426f53c0386ee80986
   subpackages:
   - oleutil
+- name: github.com/golang/snappy
+  version: 553a641470496b2327abcac10b36396bd98e45c9
+- name: github.com/pierrec/lz4
+  version: 2fcda4cb7018ce05a25959d2fe08c83e3329f169
+- name: github.com/pierrec/xxHash
+  version: a0006b13c722f7f12368c00a3d3c2ae8a999a0c6
+  subpackages:
+  - xxHash32
 - name: github.com/PuerkitoBio/goquery
   version: 09540e565986583836b5fc792fe951ec5fd201dd
+- name: github.com/rcrowley/go-metrics
+  version: e181e095bae94582363434144c61a9653aff6e50
 - name: github.com/shirou/gopsutil
   version: c432be29ccce470088d07eea25b3ea7e68a8afbb
   subpackages:
@@ -19,6 +43,8 @@ imports:
   - internal/common
   - load
   - mem
+- name: github.com/Shopify/sarama
+  version: 3b1b38866a79f06deddf0487d5c27ba0697ccd65
 - name: github.com/StackExchange/wmi
   version: 5d049714c4a64225c3c79a7cf7d02f7fb5b96338
 - name: github.com/toml-lang/toml

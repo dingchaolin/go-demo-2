@@ -1,7 +1,7 @@
 package main
 
 import (
-	"demo12/monitor/common"
+	"demo13/common"
 	"os"
 	"github.com/shirou/gopsutil/cpu"
 	"time"
@@ -13,6 +13,8 @@ import (
 	"bufio"
 	"strings"
 	"log"
+	"demo13/agent"
+	"fmt"
 )
 
 var (
@@ -59,7 +61,7 @@ func CpuMetric() []*common.Metric{
 	return ret
 }
 
-func NewUserMetric(cmdstr string) MetricFunc{
+func NewUserMetric(cmdstr string) agent.MetricFunc{
 	return func()[]*common.Metric {
 		metrics, err := getUserMetrics(cmdstr)
 		if err != nil{
@@ -110,7 +112,8 @@ func main() {
 
     flag.Parse()
 	addr := *transAddr
-	sender := NewSender(addr)
+	fmt.Println( addr )
+	sender := agent.NewSender(addr)
 	//go sender.Start()
 	ch := sender.Channel()
 /*
@@ -120,7 +123,7 @@ func main() {
 		ch <- metric
 	}
 */
-	sched := NewSched(ch)
+	sched := agent.NewSched(ch)
 	sched.AddMetric( CpuMetric, time.Second)
 	sched.AddMetric(NewUserMetric("./usr.py"), 3*time.Second)
 	sender.Start()

@@ -305,4 +305,33 @@ func TestCryptoReader_Read(t *testing.T) {
 - 有一个初始号 每发一个字节 + 1
 - tcp重传很重要的信息
 
+## grafana
+
+## kafka
+- 分布式消息队列
+- zookeeper 记录 offset
+- 多个consumer 消费同一个 topic 中的不同partition
+- 一个parition只能被一个consumer消费。 
+- 如果多个consumer消费同一个partition 需要协调offset
+
+
+## elasticsearch
+- 分布式搜索引擎
+- 文档 每条数据都是一个文档 相当于数据库的每条记录
+- 索引 相当于数据库 一个数据库
+- query 请求
+- 倒排索引 搜索引擎就是一个巨大的倒排索引 把关键字提取出来 关键字-> 文档的映射 叫倒排索引
+- 每个文档都有一个id 通过id当然能够找到文档  一般我们查询是通过文档中的某一关键字通查询到某个文档 这样叫倒排索引
+- 基于lucene 引擎
+- 正排索引 比如一个网页包含了哪些关键字 这就是正排索引
+- 模板
+- curl 127.0.0.1:9200/_cat/indices 查看所有的索引
+
+## 时间序列数据库
+- 按日期分割
+- 定期清理策略
+
+## elasticsearch
+- 横向拓展
+- 查询方便
 
