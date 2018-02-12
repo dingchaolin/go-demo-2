@@ -10,7 +10,8 @@ import (
 )
 
 func indexName()string{
-	date := time.Now().Format("20160102")
+	//这个时间必须是20060102
+	date := time.Now().Format("20060102")
 	return "topic-" + date
 }
 
