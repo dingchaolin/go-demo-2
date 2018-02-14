@@ -82,6 +82,8 @@ func getUserMetrics( cmdstr string)([]*common.Metric, error){
 	stdout, _ := cmd.StdoutPipe()
 
 	err := cmd.Start()
+
+
 	if err != nil {
 		return nil, err
 	}
@@ -105,6 +107,7 @@ func getUserMetrics( cmdstr string)([]*common.Metric, error){
 		metric := NewMetric( key, n )
 		ret = append(ret, metric)
 	}
+	cmd.Wait()// 子进程退出后 为子进程收尸 必须执行 否则进程数会一直增加
 	return ret , err
 
 }

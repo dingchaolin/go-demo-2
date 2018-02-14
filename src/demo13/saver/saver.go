@@ -37,7 +37,13 @@ func main(){
 
 				// elasticsearch写入
 				// 所有 indexname type 必须全小写 可以有- _ 等字符
-				_, err := esclient.Index().Index(indexName()).Type("topic").BodyString(string(msg.Value)).Do(context.TODO())
+				// 第二个Index相当于库名 Type相当于表名
+				// 最后一个参数写context.TODO() 即可
+				_, err := esclient.Index().
+					               Index(indexName()).
+					               Type("topic").
+					               BodyString(string(msg.Value)).
+					               Do(context.TODO())
 				if err != nil {
 					log.Fatal(err)
 				}
