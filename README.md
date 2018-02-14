@@ -335,3 +335,18 @@ func TestCryptoReader_Read(t *testing.T) {
 - 横向拓展
 - 查询方便
 
+# 14 http
+- nginx 纯c写的高性能web服务器 多进程+非阻塞io 几个内核 就起几个进程 高性能 低消耗
+- tengine
+- openResty
+
+- redis 的实现方式跟node类似 单线程  非阻塞io 不用处理数据的并发保护
+
+- libevent
+- libev
+- 高性能并发库
+
+- go 最大的并行数 核心数
+- go http 一个请求 起一个协程
+
+
