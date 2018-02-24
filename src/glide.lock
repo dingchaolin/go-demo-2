@@ -1,5 +1,5 @@
-hash: 0df86bd3cc582d064d5760ec564a6d1e9e89ab9d0c9cce13e2fabcb45cde9834
-updated: 2018-02-19T21:18:56.869339+08:00
+hash: 352f1964a5bef9926fbba1d2f24180c80fd6ad01c1a2bb56e7ee4ea5f7eaa418
+updated: 2018-02-24T21:44:02.252479+08:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
@@ -30,9 +30,11 @@ imports:
 - name: github.com/gorilla/context
   version: 1ea25387ff6f684839d82767c1733ff4d4d15d0a
 - name: github.com/gorilla/securecookie
-  version: 667fe4e3466a040b780561fe9b51a83a3753eefc
+  version: e59506cc896acb7f7bf732d4fdf5e25f7ccd8983
 - name: github.com/gorilla/sessions
   version: ca9ada44574153444b00d3fd9c8559e4cc95f896
+- name: github.com/jmoiron/sqlx
+  version: 05cef0741ade10ca668982355b3f3f0bcf0ff0a8
 - name: github.com/mailru/easyjson
   version: 32fa128f234d041f196a9f3e0fea5ac9772c08e1
   subpackages:

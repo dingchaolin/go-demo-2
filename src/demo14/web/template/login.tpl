@@ -6,5 +6,8 @@
     <p><input type="submit"/></p>
 
 </form>
+{{ if . }}
+<p style="color:red">{{.}}</p>
+{{end}}
 </body>
 </html>
