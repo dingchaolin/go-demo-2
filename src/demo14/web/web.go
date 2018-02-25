@@ -14,6 +14,12 @@ import (
 
 	"database/sql"
 	//"github.com/jmoiron/sqlx"
+	"github.com/gorilla/handlers"
+	"os"
+
+	_ "net/http/pprof"//可以查看堆栈信息 暴露runtime的信息
+	// go tool pprof http://localhost:8090/debug/pprof/heap 查看内在占用情况
+	// top -cum 可以查看方法调用情况
 )
 
 var (
@@ -60,6 +66,12 @@ func CheckLogin( w http.ResponseWriter, r *http.Request){
 		//session := sessions.NewSession(store, "web")
 		//session.Values["user"]= user
 		//session.Save( r, w )
+
+		http.SetCookie(w, &http.Cookie{
+				Name:"user",
+				Value: user,
+				MaxAge: 10,//单位秒
+			})
 		http.Redirect(w, r, "/list", 302)
 
 	}else{
@@ -113,6 +125,27 @@ func Delete( w http.ResponseWriter, r *http.Request){
 //main函数启动之前调用一次
 func init(){}
 
+//中间件
+func NeedLogin(h http.HandlerFunc )http.HandlerFunc{
+	return func(w http.ResponseWriter, r * http.Request){
+		_, err := r.Cookie("user")
+		if err != nil {
+			render(w, "login", "登录过期" )
+			return
+		}
+		h(w, r)
+	}
+}
+
+type counter struct{
+	count int
+}
+
+func (c *counter) ServeHTTP(w http.ResponseWriter, r *http.Request){
+	c.count++
+	fmt.Fprintf(w, "%d", c.count)
+}
+// gorilla  实现了很多中间件
 func Start(){
 	/*
 	{
@@ -191,13 +224,37 @@ func Start(){
 	return
 */
 
-	http.HandleFunc("/hello", Hello)
+//默认的路由分发器
+
+	http.HandleFunc("/hello", NeedLogin(Hello))
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/checklogin", CheckLogin)
-	http.HandleFunc("/list", List)
+	http.HandleFunc("/list", NeedLogin(List))
 	http.HandleFunc("/delete", Delete)
+	// 所有的请求先经过LoggingHandler， 再经过默认 DefaultServeMux 路由进行处理
+	h := handlers.LoggingHandler(os.Stdout, http.DefaultServeMux)//可以打印日志了
+	//log.Fatal(http.ListenAndServe(":8090", nil))//阻塞式调用 后面的代码不会执行 使用默认的路由分发器
 
-	log.Fatal(http.ListenAndServe(":8090", nil))//阻塞式调用 后面的代码不会执行
+	//类似中间件
+	//可以通过这种方式来暴露一下内部的状态的
+	c := new(counter)
+	http.Handle("/counter", c )
+
+	/*
+ http.HandlerFunc 函数  ->  使用 http.HandlerFunc 进行挂载
+ http.Handler -> 接口   ->  使用 http.Handle 进行挂载
+ Login -> http.Handler  =>   http.HandlerFunc(Login) -> http.Handler
+  */
+
+	log.Fatal(http.ListenAndServe(":8090", h))//阻塞式调用 后面的代码不会执行
+
+
+//使用自定义路由分发器
+//	mux := http.NewServeMux()
+//	mux.HandleFunc("/login", Login)
+//	c := new(counter)
+//	http.Handle("/counter", c )
+//	log.Fatal(http.ListenAndServe(":8090", mux))//阻塞式调用 后面的代码不会执行
 }
 
 // db.QueryRow 不用close
@@ -242,3 +299,9 @@ SetMaxIdleConns 最大空闲连接数
 SetMaxOpenConns 最大连接数
 
  */
+
+ /*
+ http.HandlerFunc 函数  ->  使用 http.HandlerFunc 进行挂载
+ http.Handler -> 接口   ->  使用 http.Handle 进行挂载
+ Login -> http.Handler  =>   http.HandlerFunc(Login) -> http.Handler
+  */
