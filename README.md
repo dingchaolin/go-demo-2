@@ -349,4 +349,11 @@ func TestCryptoReader_Read(t *testing.T) {
 - go 最大的并行数 核心数
 - go http 一个请求 起一个协程
 
+# 15 标准库
+- runtime
+- 携程调度
+- 垃圾回收
 
+- GOARCH=i386 go build atomic.go
+- GOARCH=amd64 go build atomic.go
+- 影响的指令集 
