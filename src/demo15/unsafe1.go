@@ -27,6 +27,34 @@ func slice(s []int, begin int64, len int64)[]int{
 	s1 := *(*[]int)(unsafe.Pointer(&hdr))
 	return s1
 }
+
+type StringHeader struct{
+	Data unsafe.Pointer
+	Len int
+}
+
+
+func stringSlice( s string, begin int, len int)string{
+	// 进行指针的加减运算之前 要转成uintptr
+	//hdr := StringHeader{
+	//	Data: unsafe.Pointer(uintptr(unsafe.Pointer(&s)) + uintptr(begin)),
+	//	Len: len,
+	//}
+	// 不能修改原来string的数据
+	hdr := *(*StringHeader)(unsafe.Pointer(&s))
+	hdr.Data = unsafe.Pointer(uintptr(unsafe.Pointer(hdr.Data)) + uintptr(begin))
+	hdr.Len = len
+	s1 := *(*string)(unsafe.Pointer(&hdr))
+	return s1
+}
+
+func ZeroCopyString( buf []byte )string{
+	hdr := &StringHeader{
+		Data: unsafe.Pointer(&buf[0]),
+		Len: len(buf),
+	}
+	return *(*string)(unsafe.Pointer(hdr))
+}
 func main(){
 	s := []int{1,2,3}
 	fmt.Println(&s[0])
@@ -50,5 +78,20 @@ func main(){
 	fmt.Println( s3[0], s3[1] )
 
 	fmt.Println( slice(s, 1, 2))
+
+	str := "hellonihao"
+	str1 := stringSlice(str, 0, 2 )
+	fmt.Println( str1 )
+
+
+	buf := []byte{'h','e', 'l', 'l', 'o'}
+	str2 := string(buf)
+	buf[0] = 'a'
+	fmt.Println( string(buf), str2)// 没有共享内存 发生了拷贝
+
+	buf1 := []byte{'h','e', 'l', 'l', 'o'}
+	str3 := ZeroCopyString(buf)
+	buf1[0] = 'a'
+	fmt.Println( string(buf1), str3)// 共享内存 没有发生拷贝
 
 }
